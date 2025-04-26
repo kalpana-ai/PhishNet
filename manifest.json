@@ -1,20 +1,43 @@
 {
-    "manifest_version": 3,
-    "name": "Form Security Score",
-    "version": "1.0",
-    "description": "Analyzes login/signup forms and shows a security score.",
-    "permissions": ["activeTab", "scripting", "webRequest"],
-    "host_permissions": ["*://*/*"],
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["content.js"]
-      }
-    ],
-    "action": {
-      "default_popup": "popup.html"
+  "manifest_version": 3,
+  "name": "PhishNet",
+  "version": "1.0",
+  "description": "Analyzes URLs, forms, and email links for phishing detection using Gemini API.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "webRequest",
+    "notifications",
+    "storage",
+    "tabs",
+    "cookies"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "http://*/*",
+    "https://*/*",
+    "https://api.google.com/*",
+    "https://api.ipify.org"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
     },
-    "background": {
-      "service_worker": "background.js"
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["emailScanner.js"]
     }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "phishing.png",
+    "48": "phishing.png",
+    "128": "phishing.png"
   }
+}
